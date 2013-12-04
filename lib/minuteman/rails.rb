@@ -4,15 +4,16 @@ require "minuteman/rails/engine"
 
 class Minuteman
   class Rails
-    cattr_accessor :configuration, :analytics
+    def self.configuration
+      @configuration ||= Configuration.new
+      yield(@configuration) if block_given?
 
-    def self.configure
-      self.configuration ||= Configuration.new
+      @configuration
+    end
 
-      yield(self.configuration)
+    def self.analytics
+      @analytics ||= Minuteman.new(self.configuration.to_hash)
     end
   end
 end
 
-Minuteman::Rails.configure {}
-Minuteman::Rails.analytics = Minuteman.new(Minuteman::Rails.configuration.to_hash)

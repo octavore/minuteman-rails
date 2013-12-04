@@ -2,7 +2,7 @@ require_relative "./test_helper"
 
 describe Minuteman::Rails do
   it "should be configurable" do
-    Minuteman::Rails.configure do |c|
+    Minuteman::Rails.configuration do |c|
       c.silent = true
 
       assert c.kind_of?(Minuteman::Rails::Configuration)
